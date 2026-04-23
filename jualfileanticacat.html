@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>IZAL SHOP PRO</title>
+
+<style>
+body {
+  font-family: Arial;
+  margin: 0;
+  background: #f0f2f5;
+}
+
+/* LOGIN */
+.login {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 300px;
+  text-align: center;
+}
+
+/* INPUT */
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+}
+
+button {
+  padding: 10px;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.login button { background: #4facfe; color: white; }
+
+.shop {
+  display: none;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+
+.buy { background: green; color: white; }
+.cart-btn { background: orange; color: white; }
+
+.cart {
+  margin-top: 20px;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.checkout {
+  background: #007bff;
+  color: white;
+  margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div class="login" id="loginPage">
+  <div class="box">
+    <h2>Login IZAL</h2>
+    <input type="text" id="user" placeholder="Username">
+    <input type="password" id="pass" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <p id="err" style="color:red;"></p>
+  </div>
+</div>
+
+<!-- SHOP -->
+<div class="shop" id="shopPage">
+  <h2>🛒 IZAL SHOP PRO</h2>
+
+  <div class="card">
+    <h3>Produk A</h3>
+    <p>Rp10.000</p>
+    <button class="buy" onclick="tambah('Produk A',10000)">Tambah ke Keranjang</button>
+  </div>
+
+  <div class="card">
+    <h3>Produk B</h3>
+    <p>Rp20.000</p>
+    <button class="buy" onclick="tambah('Produk B',20000)">Tambah ke Keranjang</button>
+  </div>
+
+  <!-- CART -->
+  <div class="cart">
+    <h3>🧺 Keranjang</h3>
+    <ul id="cartList"></ul>
+    <h4>Total: Rp<span id="total">0</span></h4>
+
+    <select id="payment">
+      <option value="">Pilih Pembayaran</option>
+      <option>QRIS</option>
+      <option>DANA</option>
+      <option>OVO</option>
+      <option>Indomaret</option>
+    </select>
+
+    <button class="checkout" onclick="checkout()">Bayar</button>
+  </div>
+
+</div>
+
+<script>
+let cart = [];
+let total = 0;
+
+// LOGIN
+function login() {
+  let u = document.getElementById("user").value;
+  let p = document.getElementById("pass").value;
+
+  if(u === "izal" && p === "izal") {
+    document.getElementById("loginPage").style.display = "none";
+    document.getElementById("shopPage").style.display = "block";
+  } else {
+    document.getElementById("err").innerText = "Login salah!";
+  }
+}
+
+// TAMBAH KE CART
+function tambah(nama, harga) {
+  cart.push({nama, harga});
+  total += harga;
+  renderCart();
+}
+
+// RENDER CART
+function renderCart() {
+  let list = document.getElementById("cartList");
+  list.innerHTML = "";
+
+  cart.forEach(item => {
+    let li = document.createElement("li");
+    li.innerText = item.nama + " - Rp" + item.harga;
+    list.appendChild(li);
+  });
+
+  document.getElementById("total").innerText = total;
+}
+
+// CHECKOUT
+function checkout() {
+  let metode = document.getElementById("payment").value;
+
+  if(cart.length === 0) {
+    alert("Keranjang kosong!");
+    return;
+  }
+
+  if(metode === "") {
+    alert("Pilih metode pembayaran!");
+    return;
+  }
+
+  if(metode === "QRIS") {
+    alert("Tampilkan QRIS (scan untuk bayar)");
+  } 
+  else if(metode === "DANA") {
+    alert("Transfer ke DANA: 08xxxx");
+  }
+  else if(metode === "OVO") {
+    alert("Transfer ke OVO: 08xxxx");
+  }
+  else if(metode === "Indomaret") {
+    alert("Kode bayar: INDO123456");
+  }
+
+  // RESET
+  cart = [];
+  total = 0;
+  renderCart();
+}
+</script>
+
+</body>
+</html><div class="card">
+  <h3>File Anti Cacat 1</h3>
+  <p>Rp5.000</p>
+
+  <button class="buy" onclick="tambah('File Anti Cacat 1',5000)">
+    🛒 Keranjang
+  </button>
+
+  <button style="background:red;color:white;margin-top:5px;"
+    onclick="beliSekarang('File Anti Cacat 1',5000)">
+    ⚡ Beli Sekarang
+  </button>
+</div> <script>
+function beliSekarang(nama, harga) {
+  let pesan = "🛒 *ORDER LANGSUNG IZAL SHOP*%0A%0A";
+  pesan += "- " + nama + " (Rp" + harga + ")%0A";
+  pesan += "%0ATotal: Rp" + harga + "%0A";
+  pesan += "Metode: (pilih nanti)%0A";
+  pesan += "%0AMohon diproses ya 🙏";
+
+  let nomor = "6283114379759";
+  let url = "https://wa.me/" + nomor + "?text=" + pesan;
+
+  window.open(url, "_blank");
+}
+</script><div class="products" id="produkList">
+
+  <div class="card" data-harga="5000">
+    <img src="https://via.placeholder.com/150">
+    <h4>File Anti Cacat 1</h4>
+    <p>Rp5.000</p>
+    <button onclick="tambah('File Anti Cacat 1',5000)">+ Keranjang</button>
+  </div>
+
+  <div class="card" data-harga="5000">
+    <img src="https://via.placeholder.com/150">
+    <h4>File Anti Cacat 2</h4>
+    <p>Rp5.000</p>
+    <button onclick="tambah('File Anti Cacat 2',5000)">+ Keranjang</button>
+  </div>
+
+  <div class="card" data-harga="10000">
+    <img src="https://via.placeholder.com/150">
+    <h4>File Anti Cacat 3</h4>
+    <p>Rp10.000</p>
+    <button onclick="tambah('File Anti Cacat 3',10000)">+ Keranjang</button>
+  </div>
+
+  <div class="card" data-harga="20000">
+    <img src="https://via.placeholder.com/150">
+    <h4>File Anti Cacat 4</h4>
+    <p>Rp20.000</p>
+    <button onclick="tambah('File Anti Cacat 4',20000)">+ Keranjang</button>
+  </div>
+
+  <div class="card" data-harga="25000">
+    <img src="https://via.placeholder.com/150">
+    <h4>File Anti Cacat 5</h4>
+    <p>Rp25.000</p>
+    <button onclick="tambah('File Anti Cacat 5',25000)">+ Keranjang</button>
+  </div>
+
+  <div class="card" data-harga="30000">
+    <img src="https://via.placeholder.com/150">
+    <h4>File Anti Cacat 6</h4>
+    <p>Rp30.000</p>
+    <button onclick="tambah('File Anti Cacat 6',30000)">+ Keranjang</button>
+  </div>
+
+  <div class="card" data-harga="40000">
+    <img src="https://via.placeholder.com/150">
+    <h4>File Anti Cacat 7</h4>
+    <p>Rp40.000</p>
+    <button onclick="tambah('File Anti Cacat 7',40000)">+ Keranjang</button>
+  </div>
+
+  <div class="card" data-harga="50000">
+    <img src="https://via.placeholder.com/150">
+    <h4>File Anti Cacat 8</h4>
+    <p>Rp50.000</p>
+    <button onclick="tambah('File Anti Cacat 8',50000)">+ Keranjang</button>
+  </div>
+
+  <div class="card" data-harga="60000">
+    <img src="https://via.placeholder.com/150">
+    <h4>File Anti Cacat 9</h4>
+    <p>Rp60.000</p>
+    <button onclick="tambah('File Anti Cacat 9',60000)">+ Keranjang</button>
+  </div>
+
+  <div class="card" data-harga="100000">
+    <img src="https://via.placeholder.com/150">
+    <h4>File Anti Cacat 10</h4>
+    <p>Rp100.000</p>
+    <button onclick="tambah('File Anti Cacat 10',100000)">+ Keranjang</button>
+  </div>
+
+</div><div class="filter">
+  <select onchange="filterProduk(this.value)">
+    <option value="all">Semua</option>
+    <option value="murah">Murah (≤10k)</option>
+    <option value="sedang">Sedang (20k-50k)</option>
+    <option value="mahal">Mahal (≥60k)</option>
+  </select>
+</html>const express = require("express");
+const midtransClient = require("midtrans-client");
+const cors = require("cors");
+
+const app = express();
+app.use(express.json());
+app.use(cors());
+
+// GANTI DENGAN SERVER KEY KAMU
+let snap = new midtransClient.Snap({
+  isProduction: false,
+  serverKey: "YOUR_SERVER_KEY",
+});
+
+app.post("/bayar", async (req, res) => {
+  let total = req.body.total;
+
+  let parameter = {
+    transaction_details: {
+      order_id: "ORDER-" + Date.now(),
+      gross_amount: total,
+    },
+  };
+
+  try {
+    let transaction = await snap.createTransaction(parameter);
+    res.json({ token: transaction.token });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+app.listen(3000, () => {
+  console.log("Server jalan di http://localhost:3000");
+});<script src="https://app.sandbox.midtrans.com/snap/snap.js"
+data-client-key="YOUR_CLIENT_KEY"></script><script>
+async function checkout() {
+  if(cart.length === 0) {
+    alert("Keranjang kosong!");
+    return;
+  }
+
+  let response = await fetch("http://localhost:3000/bayar", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ total: total })
+  });
+
+  let data = await response.json();
+
+  snap.pay(data.token); // 🔥 ini munculin QRIS otomatis
+}
+</script>if(u.toLowerCase() === "sewak" && p === "SEWAK") <script>
+function login() {
+  let u = document.getElementById("user").value;
+  let p = document.getElementById("pass").value;
+
+  if(u === "SEWAK" && p === "SEWAK") {
+    document.getElementById("loginPage").style.display = "none";
+    document.getElementById("shopPage").style.display = "block";
+  } else {
+    document.getElementById("err").innerText = "Login salah!";
+  }
+}
+</script><script>
+let metodeDipilih = "";
+
+function setMetode(nama) {
+  metodeDipilih = nama;
+  document.getElementById("metodeText").innerText = "Metode: " + nama;
+
+  document.querySelectorAll(".metode").forEach(btn => {
+    btn.classList.remove("active");
+  });
+
+  event.target.classList.add("active");
+}
+
+// BELI LANGSUNG WA
+function beliWA() {
+  if(cart.length === 0) {
+    alert("Keranjang kosong!");
+    return;
+  }
+
+  if(metodeDipilih === "") {
+    alert("Pilih metode pembayaran dulu!");
+    return;
+  }
+
+  let pesan = "🛒 *ORDER IZAL SHOP*%0A%0A";
+
+  cart.forEach(item => {
+    pesan += "- " + item.nama + " (Rp" + item.harga + ")%0A";
+  });
+
+  pesan += "%0ATotal: Rp" + total + "%0A";
+  pesan += "Metode: " + metodeDipilih + "%0A";
+
+  let nomor = "6283114379759";
+  let url = "https://wa.me/" + nomor + "?text=" + pesan;
+
+  window.open(url, "_blank");
+}
+</script> <style>
+.metode {
+  margin: 5px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background: #ddd;
+  cursor: pointer;
+}
+
+.metode.active {
+  background: #4facfe;
+  color: white;
+}
+</style><button onclick="checkout()" class="checkout">
+  🛒 Keranjang
+</button>
+
+<button onclick="beliWA()" style="background:green;color:white;margin-top:10px;">
+  ⚡ Beli Langsung (WA)
+</button><div style="margin-top:15px;">
+  <h4>Pilih Pembayaran:</h4>
+
+  <button onclick="setMetode('QRIS')" class="metode">QRIS</button>
+  <button onclick="setMetode('DANA')" class="metode">DANA</button>
+  <button onclick="setMetode('OVO')" class="metode">OVO</button>
+  <button onclick="setMetode('Indomaret')" class="metode">Indomaret</button>
+
+  <p id="metodeText">Belum pilih metode</p>
+</div>
